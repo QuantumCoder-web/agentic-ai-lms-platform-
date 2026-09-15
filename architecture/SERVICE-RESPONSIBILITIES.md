@@ -2,7 +2,7 @@
 
 ## Project
 
-Agentic AI LMS Platform
+**Agentic AI LMS Platform**
 
 ---
 
@@ -10,13 +10,14 @@ Agentic AI LMS Platform
 
 This document defines ownership boundaries for each microservice.
 
-The primary goals are:
+### Primary Goals
 
 - Clear Domain Ownership
 - Loose Coupling
 - Independent Scalability
 - Independent Deployment
 - Database Isolation
+- Event-Driven Communication
 
 ---
 
@@ -26,7 +27,7 @@ The primary goals are:
 
 Authentication and Authorization
 
-### Responsibilities
+## Responsibilities
 
 - Student Registration
 - Instructor Registration
@@ -39,30 +40,30 @@ Authentication and Authorization
 - MFA Configuration
 - Role Management
 
-### Roles
+## Roles
 
 - ADMIN
 - INSTRUCTOR
 - STUDENT
 
-### Database
+## Database
 
 `AUTH_DB`
 
-### Tables
+## Tables
 
 - credentials
 - refresh_tokens
 - password_reset_tokens
 - mfa_settings
 
-### Publishes Events
+## Events Published
 
 - UserRegisteredEvent
 
-### Consumes Events
+## Events Consumed
 
-None
+- None
 
 ---
 
@@ -72,7 +73,7 @@ None
 
 User Profiles and Instructor Verification
 
-### Responsibilities
+## Responsibilities
 
 - Student Profile Management
 - Instructor Profile Management
@@ -82,22 +83,24 @@ User Profiles and Instructor Verification
 - Profile Image Management
 - Skills Management
 - Experience Information
+- User Preferences Management
 
-### Database
+## Database
 
 `USER_DB`
 
-### Tables
+## Tables
 
 - users
 - profiles
 - instructor_profiles
+- user_preferences
 
-### Publishes Events
+## Events Published
 
 - InstructorApprovedEvent
 
-### Consumes Events
+## Events Consumed
 
 - UserRegisteredEvent
 
@@ -109,7 +112,7 @@ User Profiles and Instructor Verification
 
 Learning Content Domain
 
-### Responsibilities
+## Responsibilities
 
 - Course Creation
 - Course Publishing
@@ -118,65 +121,34 @@ Learning Content Domain
 - Lesson Creation
 - Lesson Management
 - Article Management
-- YouTube Content Management
+- Video Content Management
+- Student Enrollment
+- Learning Progress Tracking
+- Course Completion Tracking
 - Course Analytics
 - Razorpay Test Payment Tracking
 
-### Database
+## Database
 
 `COURSE_DB`
 
-### Tables
+## Tables
 
 - courses
 - lessons
-- articles
-- youtube_links
+- enrollments
+- progress
 - payments
 
-### Publishes Events
+## Events Published
 
 - ContentUploadedEvent
 - CoursePublishedEvent
-
-### Consumes Events
-
-None
-
----
-
-# Enrollment Service
-
-## Owns
-
-Enrollment and Learning Progress
-
-### Responsibilities
-
-- Student Enrollment
-- Course Enrollment Tracking
-- Learning Progress Tracking
-- Course Completion Tracking
-- Progress Analytics
-
-### Database
-
-`ENROLLMENT_DB`
-
-### Tables
-
-- enrollments
-- lesson_progress
-- course_progress
-
-### Publishes Events
-
 - EnrollmentCreatedEvent
-- CourseCompletedEvent
 
-### Consumes Events
+## Events Consumed
 
-None
+- None
 
 ---
 
@@ -184,9 +156,9 @@ None
 
 ## Owns
 
-Agentic AI Operations
+Agentic AI Platform
 
-### Responsibilities
+## Responsibilities
 
 - AI Tutor
 - Quiz Generation
@@ -201,31 +173,35 @@ Agentic AI Operations
 - Prompt Tracking
 - LLM Usage Tracking
 
-### Database
+## Database
 
 `AI_DB`
 
-### Tables
+## Tables
 
 - chat_history
-- ai_conversations
-- tool_execution_audit
 - agent_execution_history
-- ai_audit_logs
+- tool_execution_audit
+- rag_query_audit
+- ai_usage_metrics
 
-### Vector Storage
+## Vector Store
 
 `PGVector`
 
-### Publishes Events
+### Vector Tables
 
-Future:
+- vector_documents
+
+## Events Published
+
+Future Events:
 
 - QuizGeneratedEvent
 - RecommendationGeneratedEvent
 - InterviewCompletedEvent
 
-### Consumes Events
+## Events Consumed
 
 - ContentUploadedEvent
 
@@ -237,7 +213,7 @@ Future:
 
 Notification Delivery
 
-### Responsibilities
+## Responsibilities
 
 - Bell Notifications
 - Email Notifications
@@ -245,27 +221,26 @@ Notification Delivery
 - Read / Unread Tracking
 - Notification Preferences
 
-### Database
+## Database
 
 `NOTIFICATION_DB`
 
-### Tables
+## Tables
 
 - notifications
 - email_notifications
 
-### Publishes Events
+## Events Published
 
-Future:
+Future Events:
 
 - NotificationDeliveredEvent
 
-### Consumes Events
+## Events Consumed
 
 - InstructorApprovedEvent
 - EnrollmentCreatedEvent
 - CoursePublishedEvent
-- CourseCompletedEvent
 
 ---
 
@@ -273,13 +248,13 @@ Future:
 
 ## Auth Service
 
-May Communicate With:
+### May Communicate With
 
 ```text
 User Service
 ```
 
-Purpose:
+### Purpose
 
 - Profile Creation
 - User Validation
@@ -288,108 +263,94 @@ Purpose:
 
 ## User Service
 
-May Communicate With:
+### May Communicate With
 
 ```text
 Auth Service
 ```
 
-Purpose:
+### Purpose
 
-- User Identity Verification
+- Identity Verification
 
 ---
 
 ## Course Service
 
-May Communicate With:
+### May Communicate With
 
 ```text
 User Service
 ```
 
-Purpose:
+### Purpose
 
 - Instructor Validation
-- Instructor Details Retrieval
-
----
-
-## Enrollment Service
-
-May Communicate With:
-
-```text
-Course Service
-User Service
-```
-
-Purpose:
-
-- Course Information Retrieval
 - Student Validation
+- Profile Retrieval
 
 ---
 
 ## AI Service
 
-May Communicate With:
+### May Communicate With
 
 ```text
 Course Service
-Enrollment Service
 User Service
 ```
 
-Purpose:
+### Purpose
 
 - Retrieve Course Content
 - Retrieve Learning Progress
 - Retrieve User Information
+- Build Learning Recommendations
 
 ---
 
 ## Notification Service
 
-May Communicate With:
+### Communication Strategy
 
 ```text
-No Direct Service Calls Preferred
+RabbitMQ Events Preferred
 ```
 
-Purpose:
+### Purpose
 
-- Consume Events From RabbitMQ
+- Event Consumption
+- Notification Generation
 
 ---
 
 # Event Ownership Matrix
 
 | Event | Producer | Consumer |
-|---------|------------|------------|
-| UserRegisteredEvent | Auth Service | User Service, Notification Service |
+|---------|----------|----------|
+| UserRegisteredEvent | Auth Service | User Service |
 | InstructorApprovedEvent | User Service | Notification Service |
 | ContentUploadedEvent | Course Service | AI Service |
 | CoursePublishedEvent | Course Service | Notification Service |
-| EnrollmentCreatedEvent | Enrollment Service | Notification Service |
-| CourseCompletedEvent | Enrollment Service | Notification Service |
+| EnrollmentCreatedEvent | Course Service | Notification Service |
 
 ---
 
 # Database Ownership Rules
 
-Each service owns its database.
-
-Forbidden:
-
-- Shared Database Access
-- Cross-Service Table Queries
-
-Allowed:
+## Allowed
 
 - REST APIs
 - OpenFeign Clients
 - RabbitMQ Events
+
+## Forbidden
+
+- Shared Databases
+- Cross-Service Table Access
+- Direct Database Queries Between Services
+
+Every service owns its data exclusively.
 
 ---
 
@@ -407,7 +368,6 @@ API Gateway
 Auth Service
 User Service
 Course Service
-Enrollment Service
 AI Service
 Notification Service
 
@@ -428,7 +388,7 @@ PGVector
 # Architectural Principles
 
 - Database Per Service
-- Event Driven Architecture
+- Event-Driven Architecture
 - Loose Coupling
 - High Cohesion
 - Independent Deployability
@@ -436,4 +396,6 @@ PGVector
 - AI-First Design
 - RAG-Based Knowledge Retrieval
 - Tool Calling Architecture
-- Observability By Default
+- Observability by Default
+- Auditability by Design
+- Security First

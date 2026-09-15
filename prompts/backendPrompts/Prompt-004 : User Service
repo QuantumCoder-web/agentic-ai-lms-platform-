@@ -1,0 +1,313 @@
+# Prompt-004 : User Service
+
+## Prompt
+
+```text
+Act as a Principal Java Microservices Architect.
+
+Generate a production-ready User Service for an enterprise-grade microservices platform.
+
+Project Name:
+
+Agentic AI LMS Platform
+
+Generate the project inside:
+
+backend/user-service
+
+Technology Stack:
+
+- Java 25
+- Spring Boot 3.x
+- Maven
+- Spring Data JPA
+- PostgreSQL
+- Eureka Client
+- OpenFeign
+- RabbitMQ (Optional)
+- Spring Boot Actuator
+- Validation
+- OpenAPI / Swagger
+
+Architecture Context:
+
+Infrastructure:
+
+- Eureka Server (Port 8761)
+- API Gateway (Port 8080)
+
+Business Services:
+
+- Auth Service
+- User Service (Current)
+- Course Service
+- AI Service
+- Notification Service
+
+Database:
+
+USER_DB
+
+Service Name:
+
+USER-SERVICE
+
+Port:
+
+8082
+
+Package Name:
+
+com.agenticailms.user
+
+Responsibilities:
+
+- Profile Management
+- User Preferences Management
+- Instructor Profile Management
+- Instructor Approval Workflow
+- Admin User Management
+
+Important Design Rules:
+
+1. Do NOT use Lombok.
+
+2. Use Java Records for:
+
+   - Request DTOs
+   - Response DTOs
+   - Event DTOs
+
+3. Use Normal Java Classes for:
+
+   - Entities
+   - Services
+   - Controllers
+   - Configurations
+   - Repositories
+
+4. Ensure Java 25 compatibility.
+
+5. RabbitMQ integration must be optional.
+
+6. Application must start successfully even when RabbitMQ is unavailable.
+
+Database Tables:
+
+users
+
+- id
+- auth_user_id
+- role
+- status
+- created_at
+
+profiles
+
+- id
+- user_id
+- full_name
+- email
+- phone
+- bio
+- profile_image_url
+
+instructor_profiles
+
+- id
+- user_id
+- skills
+- experience
+- linkedin_url
+- approval_status
+
+user_preferences
+
+- id
+- user_id
+- notifications_enabled
+- email_enabled
+- theme
+- updated_at
+
+Events Consumed:
+
+UserRegisteredEvent
+
+Source:
+
+Auth Service
+
+Behavior:
+
+- Create User Record
+- Create Empty Profile
+- Create Default User Preferences
+
+Events Published:
+
+InstructorApprovedEvent
+
+Destination:
+
+Notification Service
+
+Behavior:
+
+- Notify instructor approval
+
+Generate Layered Architecture:
+
+- controller
+- service
+- repository
+- entity
+- dto
+- config
+- exception
+- event
+- mapper
+
+API Requirements
+
+Profile APIs
+
+GET /api/users/profile
+
+PUT /api/users/profile
+
+Request:
+
+{
+  "fullName": "John Doe",
+  "phone": "9876543210",
+  "bio": "Java Developer"
+}
+
+POST /api/users/profile/image
+
+Generate image upload skeleton only.
+
+No cloud integration required.
+
+Instructor APIs
+
+GET /api/instructors/pending
+
+GET /api/instructors/{id}
+
+PUT /api/instructors/{id}/approve
+
+PUT /api/instructors/{id}/reject
+
+Admin APIs
+
+GET /api/admin/users
+
+GET /api/admin/instructors
+
+GET /api/admin/dashboard
+
+Dashboard Response Example:
+
+{
+  "totalUsers": 100,
+  "totalStudents": 80,
+  "totalInstructors": 20
+}
+
+Security Requirements
+
+- JWT-based authentication
+- Integration-ready with Auth Service
+- Role-based authorization
+
+Roles:
+
+- ADMIN
+- INSTRUCTOR
+- STUDENT
+
+Validation Requirements
+
+Use:
+
+- @NotBlank
+- @NotNull
+- @Email
+- @Size
+
+Generate Global Exception Handling.
+
+Actuator Requirements
+
+Expose:
+
+- health
+- info
+- metrics
+
+Swagger Requirements
+
+Generate:
+
+- OpenAPI
+- Swagger UI
+
+Expected URLs:
+
+http://localhost:8082/swagger-ui/index.html
+
+http://localhost:8082/v3/api-docs
+
+Testing Requirements
+
+Generate:
+
+- JUnit 5 Tests
+- Mockito Tests
+- Spring Boot Tests
+
+Create tests for:
+
+- ProfileService
+- ProfileController
+- InstructorApprovalService
+- UserRegisteredEventConsumer
+
+Coverage Goal:
+
+80%+
+
+Code Quality Requirements
+
+- SonarQube Ready
+- JaCoCo Ready
+- SOLID Principles
+- Clean Architecture
+- No Hardcoded Secrets
+- Environment-based Configuration
+
+Output Requirements
+
+Generate complete source code for:
+
+- pom.xml
+- application.yml
+- entities
+- repositories
+- services
+- controllers
+- DTOs
+- event consumers
+- event publishers
+- test classes
+- README.md
+
+After generation:
+
+1. Review architecture alignment.
+2. Identify any gaps.
+3. Run a self-review checklist.
+4. Explain every generated file and design decision.
+```

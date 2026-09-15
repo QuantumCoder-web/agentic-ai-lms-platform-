@@ -20,7 +20,7 @@ backend/eureka-server
 
 Technology Stack:
 
-- Java 25
+- Java 21
 - Maven
 - Spring Boot 3.x
 - Spring Cloud Netflix Eureka Server

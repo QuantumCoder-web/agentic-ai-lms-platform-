@@ -2,7 +2,7 @@
 
 ## Project
 
-Agentic AI LMS Platform
+**Agentic AI LMS Platform**
 
 ---
 
@@ -22,7 +22,7 @@ Communication occurs through:
 
 # AUTH_DB
 
-Purpose:
+### Purpose
 
 Authentication and Authorization
 
@@ -30,7 +30,7 @@ Authentication and Authorization
 
 ## Table: credentials
 
-Columns:
+### Columns
 
 - id (PK)
 - email (Unique)
@@ -41,7 +41,7 @@ Columns:
 - created_at
 - updated_at
 
-Role Values:
+### Role Values
 
 - ADMIN
 - INSTRUCTOR
@@ -51,7 +51,7 @@ Role Values:
 
 ## Table: refresh_tokens
 
-Columns:
+### Columns
 
 - id (PK)
 - user_id
@@ -63,7 +63,7 @@ Columns:
 
 ## Table: password_reset_tokens
 
-Columns:
+### Columns
 
 - id (PK)
 - user_id
@@ -75,7 +75,7 @@ Columns:
 
 ## Table: mfa_settings
 
-Columns:
+### Columns
 
 - id (PK)
 - user_id
@@ -87,7 +87,7 @@ Columns:
 
 # USER_DB
 
-Purpose:
+### Purpose
 
 Profile Management
 
@@ -95,7 +95,7 @@ Profile Management
 
 ## Table: users
 
-Columns:
+### Columns
 
 - id (PK)
 - auth_user_id
@@ -103,19 +103,19 @@ Columns:
 - status
 - created_at
 
-Status Values:
+### Status Values
 
-Instructor
+#### Instructor
 
 - PENDING_APPROVAL
 - APPROVED
 - REJECTED
 
-Student
+#### Student
 
 - ACTIVE
 
-Admin
+#### Admin
 
 - ACTIVE
 
@@ -123,7 +123,7 @@ Admin
 
 ## Table: profiles
 
-Columns:
+### Columns
 
 - id (PK)
 - user_id
@@ -139,7 +139,7 @@ Columns:
 
 ## Table: instructor_profiles
 
-Columns:
+### Columns
 
 - id (PK)
 - user_id
@@ -152,7 +152,7 @@ Columns:
 
 # COURSE_DB
 
-Purpose:
+### Purpose
 
 Learning Domain
 
@@ -160,7 +160,7 @@ Learning Domain
 
 ## Table: courses
 
-Columns:
+### Columns
 
 - id (PK)
 - title
@@ -170,7 +170,7 @@ Columns:
 - created_at
 - updated_at
 
-Status Values:
+### Status Values
 
 - DRAFT
 - PUBLISHED
@@ -180,7 +180,7 @@ Status Values:
 
 ## Table: lessons
 
-Columns:
+### Columns
 
 - id (PK)
 - course_id
@@ -194,7 +194,7 @@ Columns:
 
 ## Table: enrollments
 
-Columns:
+### Columns
 
 - id (PK)
 - student_id
@@ -202,7 +202,7 @@ Columns:
 - enrollment_status
 - enrolled_at
 
-Status Values:
+### Status Values
 
 - ACTIVE
 - COMPLETED
@@ -212,7 +212,7 @@ Status Values:
 
 ## Table: progress
 
-Columns:
+### Columns
 
 - id (PK)
 - student_id
@@ -225,11 +225,11 @@ Columns:
 
 ## Table: payments
 
-Purpose:
+### Purpose
 
 Dummy Razorpay Test Tracking
 
-Columns:
+### Columns
 
 - id (PK)
 - student_id
@@ -240,7 +240,7 @@ Columns:
 - status
 - created_at
 
-Status:
+### Status Values
 
 - PENDING
 - SUCCESS
@@ -250,7 +250,7 @@ Status:
 
 # AI_DB
 
-Purpose:
+### Purpose
 
 Agentic AI Operations
 
@@ -258,7 +258,7 @@ Agentic AI Operations
 
 ## Table: chat_history
 
-Columns:
+### Columns
 
 - id (PK)
 - user_id
@@ -267,7 +267,7 @@ Columns:
 - content
 - created_at
 
-Message Types:
+### Message Types
 
 - USER
 - ASSISTANT
@@ -276,7 +276,7 @@ Message Types:
 
 ## Table: agent_execution_history
 
-Columns:
+### Columns
 
 - id (PK)
 - user_id
@@ -290,7 +290,7 @@ Columns:
 
 ## Table: tool_execution_audit
 
-Columns:
+### Columns
 
 - id (PK)
 - tool_name
@@ -298,7 +298,7 @@ Columns:
 - execution_time
 - created_at
 
-Status:
+### Status Values
 
 - SUCCESS
 - FAILED
@@ -307,7 +307,7 @@ Status:
 
 ## Table: rag_query_audit
 
-Columns:
+### Columns
 
 - id (PK)
 - user_id
@@ -320,19 +320,17 @@ Columns:
 
 # PGVECTOR
 
-Purpose:
+### Purpose
 
-Semantic Search
-
-RAG
-
-Embeddings
+- Semantic Search
+- RAG
+- Embeddings
 
 ---
 
 ## Table: document_chunks
 
-Columns:
+### Columns
 
 - id (PK)
 - course_id
@@ -344,7 +342,7 @@ Columns:
 
 ## Table: document_embeddings
 
-Columns:
+### Columns
 
 - id (PK)
 - chunk_id
@@ -354,7 +352,7 @@ Columns:
 
 # NOTIFICATION_DB
 
-Purpose:
+### Purpose
 
 Notification Management
 
@@ -362,7 +360,7 @@ Notification Management
 
 ## Table: notifications
 
-Columns:
+### Columns
 
 - id (PK)
 - user_id
@@ -372,12 +370,12 @@ Columns:
 - notification_type
 - created_at
 
-Status:
+### Status Values
 
 - READ
 - UNREAD
 
-Notification Types:
+### Notification Types
 
 - ENROLLMENT
 - COURSE
@@ -389,24 +387,25 @@ Notification Types:
 
 # Relationships
 
-Auth Service
+## Auth Service
 
+```text
 credentials
-        |
-        |
-        v
-User Service
-
+    |
+    |
+    v
 users
-        |
-        |
-        v
+    |
+    |
+    v
 profiles
+```
 
 ---
 
-Course Service
+## Course Service
 
+```text
 courses
    |
    |
@@ -424,16 +423,19 @@ enrollments
    |
    v
 progress
+```
 
 ---
 
-AI Service
+## AI Service
 
+```text
 document_chunks
         |
         |
         v
 document_embeddings
+```
 
 ---
 

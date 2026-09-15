@@ -13,14 +13,13 @@ Agentic AI LMS Platform
 - Auth Service
 - User Service
 - Course Service
-- Enrollment Service
 - AI Service
 - Notification Service
 
 ## Infrastructure Services
 
-- Eureka Server
 - API Gateway
+- Eureka Server
 
 ---
 
@@ -28,7 +27,7 @@ Agentic AI LMS Platform
 
 ## Purpose
 
-Handles authentication and authorization.
+Handles Authentication and Authorization.
 
 ---
 
@@ -75,29 +74,48 @@ AUTH_DB
 
 ## APIs
 
-### Authentication APIs
+### Registration
 
 ```http
 POST /api/auth/register/student
 POST /api/auth/register/instructor
+```
+
+### Authentication
+
+```http
 POST /api/auth/login
 POST /api/auth/logout
 POST /api/auth/refresh-token
+```
+
+### Password Management
+
+```http
 POST /api/auth/forgot-password
 POST /api/auth/reset-password
+```
+
+### MFA
+
+```http
 POST /api/auth/mfa/enable
 POST /api/auth/mfa/verify
 ```
 
-### Response Objects
+---
 
-```json
-{
-  "accessToken": "jwt-token",
-  "refreshToken": "refresh-token",
-  "role": "STUDENT"
-}
+## Events Published
+
+```text
+UserRegisteredEvent
 ```
+
+---
+
+## Events Consumed
+
+None
 
 ---
 
@@ -105,7 +123,7 @@ POST /api/auth/mfa/verify
 
 ## Purpose
 
-Profile and user management.
+Profile Management & Instructor Approval.
 
 ---
 
@@ -121,13 +139,19 @@ USER_DB
 
 - id
 - auth_user_id
-- first_name
-- last_name
+- role
+- status
+- created_at
+
+### profiles
+
+- id
+- user_id
+- full_name
 - email
 - phone
-- profile_image_url
 - bio
-- created_at
+- profile_image_url
 
 ### instructor_profiles
 
@@ -137,40 +161,60 @@ USER_DB
 - experience
 - linkedin_url
 - approval_status
-- approved_by
-- approved_at
 
-### admin_profiles
+### user_preferences
 
 - id
 - user_id
+- notifications_enabled
+- email_enabled
+- theme
+- updated_at
 
 ---
 
 ## APIs
 
-### User APIs
+### Profile APIs
 
 ```http
-GET    /api/users/profile
-PUT    /api/users/profile
-POST   /api/users/profile/image
+GET  /api/users/profile
+PUT  /api/users/profile
+POST /api/users/profile/image
 ```
 
 ### Instructor APIs
 
 ```http
-GET    /api/instructors/pending
-PUT    /api/instructors/{id}/approve
-PUT    /api/instructors/{id}/reject
-GET    /api/instructors/{id}
+GET  /api/instructors/pending
+GET  /api/instructors/{id}
+
+PUT  /api/instructors/{id}/approve
+PUT  /api/instructors/{id}/reject
 ```
 
 ### Admin APIs
 
 ```http
 GET /api/admin/users
-GET /api/admin/metrics
+GET /api/admin/instructors
+GET /api/admin/dashboard
+```
+
+---
+
+## Events Consumed
+
+```text
+UserRegisteredEvent
+```
+
+---
+
+## Events Published
+
+```text
+InstructorApprovedEvent
 ```
 
 ---
@@ -179,7 +223,7 @@ GET /api/admin/metrics
 
 ## Purpose
 
-Course and content management.
+Course, Lesson, Enrollment and Progress Management.
 
 ---
 
@@ -196,9 +240,9 @@ COURSE_DB
 - id
 - title
 - description
+- instructor_id
 - category
 - level
-- instructor_id
 - status
 - created_at
 
@@ -208,48 +252,87 @@ COURSE_DB
 - course_id
 - title
 - content
-- lesson_order
-- status
-
-### articles
-
-- id
-- course_id
-- title
-- content
-
-### youtube_links
-
-- id
-- course_id
-- title
+- content_type
 - youtube_url
+- lesson_order
+
+### enrollments
+
+- id
+- student_id
+- course_id
+- enrollment_status
+- enrolled_at
+
+### progress
+
+- id
+- student_id
+- course_id
+- completion_percentage
+- last_accessed
+- updated_at
+
+### payments
+
+- id
+- student_id
+- course_id
+- razorpay_order_id
+- razorpay_payment_id
+- amount
+- status
+- created_at
 
 ---
 
-## APIs
-
-### Course APIs
+## Course APIs
 
 ```http
 POST   /api/courses
 PUT    /api/courses/{id}
 GET    /api/courses
 GET    /api/courses/{id}
-DELETE /api/courses/{id}
+
 PUT    /api/courses/{id}/publish
+PUT    /api/courses/{id}/archive
 ```
 
-### Lesson APIs
+---
+
+## Lesson APIs
 
 ```http
-POST   /api/lessons
-PUT    /api/lessons/{id}
-GET    /api/lessons/{id}
-PUT    /api/lessons/{id}/publish
+POST /api/lessons
+PUT  /api/lessons/{id}
+GET  /api/lessons/{id}
 ```
 
-### Search APIs
+---
+
+## Enrollment APIs
+
+```http
+POST /api/enrollments
+
+GET /api/enrollments/my-courses
+
+GET /api/enrollments/{courseId}
+```
+
+---
+
+## Progress APIs
+
+```http
+PUT /api/progress/lesson
+
+GET /api/progress/{courseId}
+```
+
+---
+
+## Search APIs
 
 ```http
 GET /api/courses/search
@@ -257,71 +340,29 @@ GET /api/courses/search
 
 ---
 
-# 5. Enrollment Service
+## Events Published
 
-## Purpose
+```text
+ContentUploadedEvent
 
-Enrollment and progress tracking.
+CoursePublishedEvent
 
----
-
-## Database
-
-ENROLLMENT_DB
-
----
-
-## Tables
-
-### enrollments
-
-- id
-- student_id
-- course_id
-- enrolled_at
-- status
-
-### lesson_progress
-
-- id
-- enrollment_id
-- lesson_id
-- completed
-- completed_at
-
-### course_progress
-
-- id
-- enrollment_id
-- completion_percentage
-- last_accessed
-
----
-
-## APIs
-
-### Enrollment APIs
-
-```http
-POST /api/enrollments
-GET  /api/enrollments/my-courses
-GET  /api/enrollments/{courseId}
-```
-
-### Progress APIs
-
-```http
-PUT /api/progress/lesson
-GET /api/progress/{courseId}
+EnrollmentCreatedEvent
 ```
 
 ---
 
-# 6. AI Service
+## Events Consumed
+
+None
+
+---
+
+# 5. AI Service
 
 ## Purpose
 
-Agentic AI orchestration and execution.
+Agentic AI Orchestration Layer.
 
 ---
 
@@ -331,51 +372,74 @@ AI_DB
 
 ---
 
-## Vector Database
-
-PGVector
-
----
-
 ## Tables
 
-### ai_conversations
+### chat_history
 
 - id
 - user_id
 - session_id
-- prompt
+- message_type
+- content
+- created_at
+
+### agent_execution_history
+
+- id
+- user_id
+- question
+- tools_used
+- execution_time
 - response
 - created_at
 
-### ai_tool_execution
+### tool_execution_audit
 
 - id
-- conversation_id
 - tool_name
-- execution_time
 - status
+- execution_time
+- created_at
 
-### ai_audit_logs
+### rag_query_audit
 
 - id
-- prompt
+- user_id
+- query
+- retrieved_chunks
 - response
-- retrieved_context
-- token_usage
-- duration
+- created_at
 
-### embeddings_metadata
+### ai_usage_metrics
 
 - id
-- content_type
-- content_id
-- vector_reference
+- user_id
+- llm_provider
+- model_name
+- prompt_tokens
+- completion_tokens
+- total_tokens
+- execution_time
 - created_at
 
 ---
 
-## Supported Features
+## Vector Store
+
+PGVector
+
+### vector_documents
+
+- id
+- course_id
+- lesson_id
+- chunk_text
+- embedding_vector
+- created_at
+
+---
+
+## APIs
 
 ### AI Tutor
 
@@ -407,6 +471,18 @@ POST /api/ai/interview
 POST /api/ai/advisor
 ```
 
+### Career Advisor
+
+```http
+POST /api/ai/career-advisor
+```
+
+### Content Generator
+
+```http
+POST /api/ai/content-generator
+```
+
 ### Course Builder
 
 ```http
@@ -415,77 +491,64 @@ POST /api/ai/course-builder
 
 ---
 
-## Tool Registry
+# Agent Tools
 
 ### SearchCourseTool
 
-Purpose:
-
-Search available courses.
-
----
+Search courses.
 
 ### GetLessonTool
 
-Purpose:
-
 Fetch lesson content.
-
----
 
 ### EnrollCourseTool
 
-Purpose:
-
-Enroll student into course.
-
----
+Enroll student.
 
 ### KnowledgeRetrievalTool
 
-Purpose:
-
-Retrieve relevant RAG chunks.
-
----
+Perform RAG retrieval.
 
 ### SummaryTool
 
-Purpose:
-
-Generate lesson summary.
-
----
+Generate summaries.
 
 ### QuizTool
 
-Purpose:
-
 Generate quizzes.
-
----
 
 ### ProgressAnalyzerTool
 
-Purpose:
-
-Analyze learning progress.
-
----
+Analyze learner progress.
 
 ### InternetSearchTool
 
-Purpose:
+Perform Tavily Search.
 
-Perform Tavily search.
+### CareerAdvisorTool
+
+Generate career recommendations.
+
+### ContentGeneratorTool
+
+Generate educational content.
 
 ---
 
-# 7. Notification Service
+## Events Consumed
+
+```text
+ContentUploadedEvent
+EnrollmentCreatedEvent
+```
+
+---
+
+# 6. Notification Service
 
 ## Purpose
 
-Notification management and delivery.
+Notification Delivery & Tracking.
 
 ---
 
@@ -503,8 +566,8 @@ NOTIFICATION_DB
 - user_id
 - title
 - message
+- status
 - type
-- read_status
 - created_at
 
 ### email_notifications
@@ -520,24 +583,33 @@ NOTIFICATION_DB
 
 ## APIs
 
-### Notification APIs
-
 ```http
 GET /api/notifications
+
 PUT /api/notifications/{id}/read
 ```
 
 ---
 
-# 8. RabbitMQ Design
+## Events Consumed
 
-## Exchanges
+```text
+InstructorApprovedEvent
 
-### lms.events.exchange
+CoursePublishedEvent
 
-Purpose:
+EnrollmentCreatedEvent
+```
 
-Main event exchange.
+---
+
+# 7. RabbitMQ Design
+
+## Exchange
+
+```text
+lms.events.exchange
+```
 
 ---
 
@@ -547,67 +619,90 @@ Main event exchange.
 
 Consumes:
 
-- UserRegisteredEvent
+```text
+UserRegisteredEvent
+```
 
 ### instructor.approved.queue
 
 Consumes:
 
-- InstructorApprovedEvent
+```text
+InstructorApprovedEvent
+```
 
 ### course.published.queue
 
 Consumes:
 
-- CoursePublishedEvent
+```text
+CoursePublishedEvent
+```
 
 ### enrollment.created.queue
 
 Consumes:
 
-- EnrollmentCreatedEvent
+```text
+EnrollmentCreatedEvent
+```
 
 ### content.uploaded.queue
 
 Consumes:
 
-- ContentUploadedEvent
-
----
-
-# 9. Event Contracts
-
-## UserRegisteredEvent
-
-```json
-{
-  "userId": 1,
-  "email": "user@email.com",
-  "role": "STUDENT"
-}
+```text
+ContentUploadedEvent
 ```
 
 ---
 
-## InstructorApprovedEvent
+# 8. API Gateway
 
-```json
-{
-  "userId": 10,
-  "approvedAt": "timestamp"
-}
+## Responsibilities
+
+- Request Routing
+- JWT Validation
+- Request Filtering
+- Correlation ID Injection
+- Security Enforcement
+
+---
+
+## Routes
+
+```text
+/auth/**          -> Auth Service
+
+/users/**         -> User Service
+
+/courses/**       -> Course Service
+
+/ai/**            -> AI Service
+
+/notifications/** -> Notification Service
 ```
 
 ---
 
-## CoursePublishedEvent
+# 9. Eureka Server
 
-```json
-{
-  "courseId": 100,
-  "courseName": "Spring Boot"
-}
-```
+## Responsibilities
+
+- Service Registration
+- Service Discovery
+- Dynamic Endpoint Resolution
+
+---
+
+## Registered Services
+
+- API Gateway
+- Auth Service
+- User Service
+- Course Service
+- AI Service
+- Notification Service
 
 ---
 
@@ -615,10 +710,10 @@ Consumes:
 
 ## Authentication
 
-- JWT Access Tokens
-- Refresh Tokens
-- MFA Support
-- BCrypt Password Hashing
+- JWT Access Token
+- Refresh Token
+- MFA
+- BCrypt
 
 ## Authorization
 
@@ -628,170 +723,62 @@ Roles:
 - INSTRUCTOR
 - STUDENT
 
-## Security Enforcement
+## Enforcement
 
-### Gateway
+### Gateway Layer
 
 - JWT Validation
-- Request Filtering
 
 ### Service Layer
 
-- Method-Level Authorization
-- Resource Ownership Checks
+- Method-Level Security
+- Resource Ownership Validation
 
 ---
 
-# 11. API Gateway Design
-
-## Responsibilities
-
-- Request Routing
-- JWT Validation
-- Rate Limiting
-- Correlation ID Injection
-- Centralized Logging
-
-### Routes
-
-```text
-/auth/**           -> Auth Service
-/users/**          -> User Service
-/courses/**        -> Course Service
-/enrollments/**    -> Enrollment Service
-/ai/**             -> AI Service
-/notifications/**  -> Notification Service
-```
-
----
-
-# 12. Eureka Service Discovery
-
-## Responsibilities
-
-- Service Registration
-- Service Discovery
-- Load Balancing Support
-- Dynamic Endpoint Resolution
-
----
-
-# 13. Observability Design
+# 11. Observability
 
 ## Zipkin
 
-Tracks:
-
-- Request Traces
-- Service Dependencies
-- Latency Analysis
+- Distributed Tracing
 
 ## Prometheus
 
-Collects:
-
-- API Metrics
-- JVM Metrics
-- RabbitMQ Metrics
-- AI Metrics
+- Metrics Collection
 
 ## Grafana
 
 Dashboards:
 
 - Service Health
-- API Monitoring
 - AI Usage
-- Queue Monitoring
+- RabbitMQ Monitoring
 - Database Monitoring
+- API Performance
 
 ---
 
-# 14. Sequence Flows
+# 12. Design Patterns
 
-## Student Enrollment Flow
-
-```text
-Student
-  ↓
-Frontend
-  ↓
-Gateway
-  ↓
-Enrollment Service
-  ↓
-EnrollmentCreatedEvent
-  ↓
-RabbitMQ
-  ↓
-Notification Service
-```
+- Microservices Architecture
+- Event Driven Architecture
+- Outbox Pattern
+- Circuit Breaker
+- Retry Pattern
+- Tool Calling Pattern
+- RAG Pattern
+- API Gateway Pattern
+- Service Discovery Pattern
 
 ---
 
-## AI Tutor Flow
-
-```text
-Student Question
-      ↓
-AI Service
-      ↓
-KnowledgeRetrievalTool
-      ↓
-PGVector
-      ↓
-Relevant Chunks
-      ↓
-LLM
-      ↓
-Response
-      ↓
-Audit Storage
-```
-
----
-
-# 15. Design Patterns Used
-
-## Microservices
-
-- Independent deployment
-- Independent scaling
-
-## CQRS (Lightweight)
-
-- Read APIs
-- Write APIs
-
-## Outbox Pattern
-
-- Reliable event publishing
-
-## Circuit Breaker
-
-- Service failure handling
-
-## Retry Pattern
-
-- RabbitMQ consumer retries
-
-## RAG Pattern
-
-- Context-aware AI responses
-
-## Tool Calling Pattern
-
-- Agentic workflow execution
-
----
-
-# 16. Future Enhancements
+# 13. Future Enhancements
 
 - OAuth2 / SSO
-- Certificate Generation
-- Mobile Application
+- Passwordless Login
+- Mobile App
 - Live Classes
+- Certificate Generation
 - Multi-Agent AI
 - Kubernetes Deployment
 - Multi-Tenant LMS
-- Voice-Based AI Tutor

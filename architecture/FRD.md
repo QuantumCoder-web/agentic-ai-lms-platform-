@@ -1,289 +1,222 @@
+# Functional Requirements Document (FRD)
 
-Functional Requirements Document (FRD)
-Project Name
+# Project Name
+## Agentic AI LMS Platform
 
-Agentic AI LMS Platform
+---
 
-1. Project Overview
+# 1. Project Overview
 
-The Agentic AI LMS Platform is an enterprise-grade learning management system that combines traditional learning management capabilities with Agentic AI, Tool Calling, Retrieval-Augmented Generation (RAG), and AI-assisted learning workflows.
+The **Agentic AI LMS Platform** is an enterprise-grade Learning Management System (LMS) that combines traditional learning management capabilities with modern AI technologies, including:
+
+- Agentic AI
+- Tool Calling
+- Retrieval-Augmented Generation (RAG)
+- AI-Assisted Learning Workflows
 
 The platform enables:
 
-Students to learn through courses, articles, videos, and AI-powered assistance.
-Instructors to create and manage learning content.
-Administrators to manage users, courses, and system operations.
+### Students
+- Learn through courses, articles, and videos
+- Interact with AI-powered learning assistants
+- Track progress and receive personalized recommendations
 
-The platform uses microservices architecture with Spring Boot, Spring AI, RabbitMQ, PostgreSQL, PGVector, Tavily, and modern observability tools.
+### Instructors
+- Create and manage learning content
+- Generate educational materials using AI
+- Monitor learner engagement and analytics
 
-2. User Roles
-2.1 Student
+### Administrators
+- Manage users and instructors
+- Oversee platform operations
+- Monitor AI and system usage
 
-A student can:
+### Technology Stack
+- Spring Boot
+- Spring AI
+- RabbitMQ
+- PostgreSQL
+- PGVector
+- Tavily
+- Prometheus
+- Grafana
+- Zipkin
 
-Register an account
-Login to the platform
-Manage profile information
-Enroll in courses
-View lessons
-Read articles
-Watch learning videos
-Interact with AI Tutor
-Generate lesson summaries
-Generate quizzes
-Participate in AI mock interviews
-View learning progress
-Receive notifications
-2.2 Instructor
+---
 
-An instructor can:
+# 2. User Roles
 
-Register an account
-Maintain professional profile
-Await admin approval
-Create courses
-Update courses
-Publish courses
-Add lessons
-Upload articles
-Add YouTube learning links
-Generate course content using AI
-Generate quizzes using AI
-View enrolled students
-View course analytics
-Receive notifications
-2.3 Admin
+## 2.1 Student
 
-An administrator can:
+A Student shall be able to:
 
-Manage users
-Approve instructors
-Reject instructors
-View system metrics
-View AI usage statistics
-View platform analytics
-Manage course lifecycle
-Monitor notifications
-3. Authentication Requirements
+1. Register an account
+2. Login to the platform
+3. Manage profile information
+4. Enroll in courses
+5. View lessons
+6. Read articles
+7. Watch learning videos
+8. Interact with AI Tutor
+9. Generate lesson summaries
+10. Generate quizzes
+11. Participate in AI mock interviews
+12. View learning progress
+13. Receive notifications
 
-The system shall provide:
+---
 
-Registration
-Student registration
-Instructor registration
-Authentication
-User login
-User logout
-JWT-based authentication
-Refresh token support
-Security
-Password encryption using BCrypt
-Forgot password flow
-Password reset flow
-MFA enablement support
-Authorization
+## 2.2 Instructor
 
-Role-based access control for:
+An Instructor shall be able to:
 
-Student
-Instructor
-Admin
-4. User Profile Management
+1. Register an account
+2. Maintain professional profile
+3. Await admin approval
+4. Create courses
+5. Update courses
+6. Publish courses
+7. Add lessons
+8. Upload articles
+9. Add YouTube learning links
+10. Generate course content using AI
+11. Generate quizzes using AI
+12. View enrolled students
+13. View course analytics
+14. Receive notifications
+
+---
+
+## 2.3 Administrator
+
+An Administrator shall be able to:
+
+1. Manage users
+2. Approve instructors
+3. Reject instructors
+4. View system metrics
+5. View AI usage statistics
+6. View platform analytics
+7. Manage course lifecycle
+8. Monitor notifications
+
+---
+
+# 3. Authentication Requirements
+
+## 3.1 Registration
+
+The platform shall support:
+
+- Student Registration
+- Instructor Registration
+
+---
+
+## 3.2 Authentication
+
+The platform shall support:
+
+- User Login
+- User Logout
+- JWT-Based Authentication
+- Refresh Token Support
+
+---
+
+## 3.3 Security
+
+The platform shall support:
+
+- Password encryption using BCrypt
+- Forgot Password functionality
+- Password Reset functionality
+- Multi-Factor Authentication (MFA)
+
+---
+
+## 3.4 Authorization
+
+Role-Based Access Control (RBAC) shall be implemented for:
+
+- Student
+- Instructor
+- Admin
+
+---
+
+# 4. User Profile Management
 
 Users shall be able to:
 
-View profile
-Update profile
-Upload profile photo
-Maintain contact information
-Update biography
-Instructor Additional Information
-Skills
-Experience
-LinkedIn profile
-Approval status
-5. Course Management
+1. View profile
+2. Update profile
+3. Upload profile photo
+4. Maintain contact information
+5. Update biography
+
+## Instructor Additional Information
+
+Instructors shall maintain:
+
+- Skills
+- Experience
+- LinkedIn Profile
+- Approval Status
+
+---
+
+# 5. Course Management
+
+## 5.1 Course Operations
 
 Instructors shall be able to:
 
-Course Operations
-Create course
-Update course
-Publish course
-Archive course
-Lesson Operations
-Create lesson
-Update lesson
-Publish lesson
-Content Types
-Articles
-Rich text content
-YouTube links
-6. Enrollment Management
+1. Create Course
+2. Update Course
+3. Publish Course
+4. Archive Course
 
-Students shall be able to:
+---
 
-Search available courses
-Enroll in courses
-View enrolled courses
+## 5.2 Lesson Operations
 
-System shall:
+Instructors shall be able to:
 
-Track enrollment status
-Maintain learning progress
-Monitor course completion
-7. Notification Management
+1. Create Lesson
+2. Update Lesson
+3. Publish Lesson
+
+---
+
+## 5.3 Supported Content Types
 
 The platform shall support:
 
-Bell Notifications
-Enrollment notifications
-Instructor approval notifications
-Course publication notifications
-AI-related notifications
-Email Notifications
-Account events
-Instructor approval events
-Course enrollment confirmations
-8. AI Features
-8.1 AI Tutor
+- Articles
+- Rich Text Content
+- YouTube Learning Links
+
+---
+
+# 6. Enrollment Management
 
 Students shall be able to:
 
-Ask course-related questions
-Receive contextual answers
-Learn using retrieved course content
-8.2 Quiz Generator
+1. Search available courses
+2. Enroll in courses
+3. View enrolled courses
 
-The AI shall:
+## System Responsibilities
 
-Generate quizzes from lessons
-Generate MCQs
-Generate answer explanations
-8.3 Lesson Summarizer
+The system shall:
 
-The AI shall:
+- Track enrollment status
+- Maintain learning progress
+- Monitor course completion
 
-Summarize lesson content
-Summarize course content
-Generate revision notes
-8.4 Interview Coach
+---
 
-The AI shall:
+# 7. Notification Management
 
-Conduct mock interviews
-Ask technical questions
-Evaluate answers
-Provide feedback
-8.5 Learning Advisor
-
-The AI shall:
-
-Analyze student progress
-Recommend learning paths
-Suggest next learning activities
-8.6 AI Course Builder
-
-The AI shall assist instructors in:
-
-Creating course outlines
-Generating lesson plans
-Creating learning objectives
-9. Retrieval-Augmented Generation (RAG)
-
-The platform shall support:
-
-Content chunking
-Embedding generation
-Vector storage
-Similarity retrieval
-Context-aware response generation
-
-Knowledge sources:
-
-Articles
-Course lessons
-Learning content
-10. External Knowledge Search
-
-The platform shall support internet-assisted research using Tavily.
-
-Capabilities:
-
-Current information lookup
-Industry trend analysis
-Learning resource discovery
-Latest technology recommendations
-11. Tool Calling Requirements
-
-The AI Agent shall support:
-
-SearchCourseTool
-
-Search available courses.
-
-GetLessonTool
-
-Retrieve lesson content.
-
-EnrollCourseTool
-
-Perform course enrollment.
-
-KnowledgeRetrievalTool
-
-Retrieve relevant RAG content.
-
-SummaryTool
-
-Generate lesson summaries.
-
-QuizTool
-
-Generate quizzes.
-
-ProgressAnalyzerTool
-
-Analyze learning progress.
-
-InternetSearchTool
-
-Perform Tavily searches.
-
-12. AI Audit and Traceability
-
-The system shall maintain:
-
-User prompts
-AI responses
-Tool invocations
-Retrieved context
-Execution duration
-LLM usage details
-AI interaction history
-13. Event-Driven Requirements
-
-The platform shall publish and consume events using RabbitMQ.
-
-Supported events:
-
-UserRegisteredEvent
-InstructorApprovedEvent
-CoursePublishedEvent
-EnrollmentCreatedEvent
-ContentUploadedEvent
-14. Observability Requirements
-
-The platform shall expose:
-
-Distributed tracing
-Application metrics
-Service health monitoring
-Queue metrics
-AI performance metrics
-
-Using:
-
-Zipkin
-Prometheus
-Grafana
+## 

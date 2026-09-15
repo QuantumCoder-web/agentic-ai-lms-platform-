@@ -1,19 +1,54 @@
 # Agentic AI LMS Platform
 
-Enterprise-grade Learning Management System built using:
+Enterprise-grade Learning Management System powered by Agentic AI.
 
-- Spring Boot Microservices
+## Technology Stack
+
+### Frontend
+- React
+
+### Backend
+- Spring Boot
 - Spring Cloud Gateway
-- Eureka Service Discovery
+- Eureka
+- Config Server
+
+### Messaging
 - RabbitMQ
+
+### Database
 - PostgreSQL
 - PGVector
+
+### AI
 - Spring AI
-- Agentic AI
 - Tool Calling
 - RAG
+- Ollama (Qwen2.5)
+- Enterprise LLM Support
+
+### Observability
+- Zipkin
 - Prometheus
 - Grafana
-- Zipkin
 
-The platform demonstrates modern enterprise architecture patterns and AI-native workflows.
+## Services
+
+- Auth Service
+- User Service
+- Course Service
+- Payment Service
+- Notification Service
+- AI Service
+
+## Goal
+
+Build an enterprise-grade Agentic AI Learning Management System demonstrating:
+
+- Microservices
+- Event Driven Architecture
+- RAG
+- Tool Calling
+- Observability
+- Security
+- AI Assisted Learning

@@ -264,4 +264,176 @@ Future:
 
 - InstructorApprovedEvent
 - EnrollmentCreatedEvent
-- 
+- CoursePublishedEvent
+- CourseCompletedEvent
+
+---
+
+# Service Communication Rules
+
+## Auth Service
+
+May Communicate With:
+
+```text
+User Service
+```
+
+Purpose:
+
+- Profile Creation
+- User Validation
+
+---
+
+## User Service
+
+May Communicate With:
+
+```text
+Auth Service
+```
+
+Purpose:
+
+- User Identity Verification
+
+---
+
+## Course Service
+
+May Communicate With:
+
+```text
+User Service
+```
+
+Purpose:
+
+- Instructor Validation
+- Instructor Details Retrieval
+
+---
+
+## Enrollment Service
+
+May Communicate With:
+
+```text
+Course Service
+User Service
+```
+
+Purpose:
+
+- Course Information Retrieval
+- Student Validation
+
+---
+
+## AI Service
+
+May Communicate With:
+
+```text
+Course Service
+Enrollment Service
+User Service
+```
+
+Purpose:
+
+- Retrieve Course Content
+- Retrieve Learning Progress
+- Retrieve User Information
+
+---
+
+## Notification Service
+
+May Communicate With:
+
+```text
+No Direct Service Calls Preferred
+```
+
+Purpose:
+
+- Consume Events From RabbitMQ
+
+---
+
+# Event Ownership Matrix
+
+| Event | Producer | Consumer |
+|---------|------------|------------|
+| UserRegisteredEvent | Auth Service | User Service, Notification Service |
+| InstructorApprovedEvent | User Service | Notification Service |
+| ContentUploadedEvent | Course Service | AI Service |
+| CoursePublishedEvent | Course Service | Notification Service |
+| EnrollmentCreatedEvent | Enrollment Service | Notification Service |
+| CourseCompletedEvent | Enrollment Service | Notification Service |
+
+---
+
+# Database Ownership Rules
+
+Each service owns its database.
+
+Forbidden:
+
+- Shared Database Access
+- Cross-Service Table Queries
+
+Allowed:
+
+- REST APIs
+- OpenFeign Clients
+- RabbitMQ Events
+
+---
+
+# Dependency Direction
+
+```text
+Frontend
+    │
+    ▼
+
+API Gateway
+    │
+    ▼
+
+Auth Service
+User Service
+Course Service
+Enrollment Service
+AI Service
+Notification Service
+
+    │
+    ▼
+
+RabbitMQ
+
+    │
+    ▼
+
+PostgreSQL
+PGVector
+```
+
+---
+
+# Architectural Principles
+
+- Database Per Service
+- Event Driven Architecture
+- Loose Coupling
+- High Cohesion
+- Independent Deployability
+- Independent Scalability
+- AI-First Design
+- RAG-Based Knowledge Retrieval
+- Tool Calling Architecture
+- Observability By Default

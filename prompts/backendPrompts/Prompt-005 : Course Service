@@ -1,0 +1,343 @@
+# Prompt-005 : Course Service
+
+## Prompt
+
+```text
+Act as a Principal Java Microservices Architect.
+
+Generate a production-ready Course Service for an enterprise-grade microservices platform.
+
+Project Name:
+
+Agentic AI LMS Platform
+
+Generate the project inside:
+
+backend/course-service
+
+Technology Stack:
+
+- Java 25
+- Spring Boot 3.x
+- Maven
+- Spring Data JPA
+- PostgreSQL
+- Eureka Client
+- OpenFeign
+- Spring Boot Actuator
+- Validation
+- OpenAPI / Swagger
+
+Architecture Context:
+
+Infrastructure:
+
+- Eureka Server (Port 8761)
+- API Gateway (Port 8080)
+
+Business Services:
+
+- Auth Service
+- User Service
+- Course Service (Current)
+- Notification Service
+- AI Service
+
+Database:
+
+COURSE_DB
+
+Service Name:
+
+COURSE-SERVICE
+
+Port:
+
+8083
+
+Package Name:
+
+com.agenticailms.course
+
+Important Design Rules:
+
+1. Do NOT use Lombok.
+
+2. Use Java Records for:
+
+   - Request DTOs
+   - Response DTOs
+   - Event DTOs
+
+3. Use Normal Java Classes for:
+
+   - Entities
+   - Services
+   - Controllers
+   - Configurations
+   - Repositories
+
+4. Ensure Java 25 compatibility.
+
+5. Generate complete source code.
+
+6. RabbitMQ integration must remain optional.
+
+7. Application must start successfully without RabbitMQ.
+
+Responsibilities:
+
+- Course Management
+- Module Management
+- Lesson Management
+- Enrollment Management
+- Learning Progress Tracking
+- Course Reviews
+- Categories
+- Tags
+
+Database Tables:
+
+courses
+
+- id
+- title
+- description
+- instructor_id
+- category
+- difficulty
+- status
+- created_at
+
+modules
+
+- id
+- course_id
+- title
+- display_order
+
+lessons
+
+- id
+- module_id
+- title
+- content
+- duration_minutes
+- display_order
+
+enrollments
+
+- id
+- course_id
+- user_id
+- enrolled_at
+
+progress
+
+- id
+- enrollment_id
+- lesson_id
+- completed
+- completed_at
+
+reviews
+
+- id
+- course_id
+- user_id
+- rating
+- review_text
+- created_at
+
+Generate Layered Architecture:
+
+- controller
+- service
+- repository
+- entity
+- dto
+- config
+- exception
+- mapper
+- event
+
+Course APIs
+
+POST /api/courses
+
+GET /api/courses
+
+GET /api/courses/{id}
+
+PUT /api/courses/{id}
+
+DELETE /api/courses/{id}
+
+Module APIs
+
+POST /api/courses/{courseId}/modules
+
+GET /api/courses/{courseId}/modules
+
+Lesson APIs
+
+POST /api/modules/{moduleId}/lessons
+
+GET /api/modules/{moduleId}/lessons
+
+Enrollment APIs
+
+POST /api/courses/{courseId}/enroll
+
+GET /api/users/{userId}/enrollments
+
+Progress APIs
+
+POST /api/progress/complete
+
+GET /api/progress/{userId}/{courseId}
+
+Review APIs
+
+POST /api/courses/{courseId}/reviews
+
+GET /api/courses/{courseId}/reviews
+
+Sample Course Request
+
+{
+  "title": "Spring Boot Masterclass",
+  "description": "Enterprise Spring Boot Course",
+  "category": "BACKEND",
+  "difficulty": "INTERMEDIATE"
+}
+
+Sample Review Request
+
+{
+  "rating": 5,
+  "reviewText": "Excellent course"
+}
+
+Security Requirements
+
+- JWT Ready
+- Role-based Authorization
+
+Roles
+
+- ADMIN
+- INSTRUCTOR
+- STUDENT
+
+Authorization Rules
+
+ADMIN:
+- Full access
+
+INSTRUCTOR:
+- Create Course
+- Update Own Course
+- Create Modules
+- Create Lessons
+
+STUDENT:
+- Enroll
+- Track Progress
+- Review Courses
+
+Events
+
+Publish:
+
+CourseCreatedEvent
+
+EnrollmentCreatedEvent
+
+CourseCompletedEvent
+
+RabbitMQ Optional.
+
+If unavailable do not fail startup.
+
+Validation Requirements
+
+Use:
+
+- @NotBlank
+- @NotNull
+- @Size
+
+Generate Global Exception Handling.
+
+Swagger Requirements
+
+Generate:
+
+OpenAPI
+Swagger UI
+
+URLs:
+
+http://localhost:8083/swagger-ui/index.html
+
+http://localhost:8083/v3/api-docs
+
+Actuator Requirements
+
+Expose:
+
+- health
+- info
+- metrics
+
+Testing Requirements
+
+Generate:
+
+- JUnit 5 Tests
+- Mockito Tests
+- Spring Boot Tests
+
+Create tests for:
+
+- CourseService
+- EnrollmentService
+- ProgressService
+- CourseController
+
+Coverage Goal:
+
+80%+
+
+Code Quality
+
+- SonarQube Ready
+- JaCoCo Ready
+- SOLID Principles
+- Clean Architecture
+- Environment-based Configuration
+
+Output Requirements
+
+Generate:
+
+- pom.xml
+- application.yml
+- entities
+- repositories
+- services
+- controllers
+- DTOs
+- tests
+- README.md
+
+After generation:
+
+1. Run self-review.
+2. Validate architecture alignment.
+3. Identify gaps.
+4. Explain generated files.
+5. Continue generation automatically until complete.
+6. Do not stop for approval requests.
+```

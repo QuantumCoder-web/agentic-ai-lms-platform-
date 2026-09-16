@@ -1,0 +1,287 @@
+# Prompt-006 : Notification Service
+
+## Prompt
+
+```text
+Act as a Principal Java Microservices Architect.
+
+Generate a production-ready Notification Service for the Agentic AI LMS Platform.
+
+Project Name:
+
+Agentic AI LMS Platform
+
+Generate the project inside:
+
+backend/notification-service
+
+Technology Stack:
+
+- Java 25
+- Spring Boot 3.x
+- Maven
+- Spring Data JPA
+- PostgreSQL
+- Eureka Client
+- OpenFeign
+- Spring Boot Actuator
+- Validation
+- OpenAPI / Swagger
+
+Important Architecture Decision:
+
+RabbitMQ has been removed from the MVP.
+
+Do NOT use:
+
+- RabbitMQ
+- AMQP
+- Event Consumers
+- Event Publishers
+
+Use only:
+
+- REST APIs
+- OpenFeign
+- PostgreSQL
+
+Service Name:
+
+NOTIFICATION-SERVICE
+
+Port:
+
+8084
+
+Database:
+
+NOTIFICATION_DB
+
+Package Name:
+
+com.agenticailms.notification
+
+Responsibilities:
+
+- In-App Notifications
+- Email Notification Stub
+- Notification History
+- User Notification Preferences
+- Read/Unread Tracking
+
+Important Rules:
+
+1. Do NOT use Lombok.
+
+2. Use Java Records for:
+   - Request DTOs
+   - Response DTOs
+
+3. Use Classes for:
+   - Entities
+   - Services
+   - Controllers
+   - Configurations
+
+4. Java 25 compatible.
+
+5. Swagger enabled.
+
+6. Eureka enabled.
+
+7. Actuator enabled.
+
+Database Tables
+
+notifications
+
+- id
+- user_id
+- type
+- title
+- message
+- is_read
+- created_at
+
+notification_preferences
+
+- id
+- user_id
+- email_enabled
+- in_app_enabled
+- updated_at
+
+Enums
+
+NotificationType
+
+- COURSE
+- ENROLLMENT
+- APPROVAL
+- SYSTEM
+- AI
+
+Generate Layered Architecture
+
+- controller
+- service
+- repository
+- entity
+- dto
+- config
+- exception
+- mapper
+
+Required APIs
+
+Create Notification
+
+POST /api/notifications
+
+Request:
+
+{
+  "userId": 1,
+  "type": "COURSE",
+  "title": "Course Created",
+  "message": "A new course has been created"
+}
+
+Get User Notifications
+
+GET /api/notifications/user/{userId}
+
+Get Unread Notifications
+
+GET /api/notifications/user/{userId}/unread
+
+Mark As Read
+
+PUT /api/notifications/{notificationId}/read
+
+Delete Notification
+
+DELETE /api/notifications/{notificationId}
+
+Notification Preferences
+
+GET /api/notifications/preferences/{userId}
+
+PUT /api/notifications/preferences/{userId}
+
+Request:
+
+{
+  "emailEnabled": true,
+  "inAppEnabled": true
+}
+
+Email Stub
+
+Create EmailNotificationService.
+
+Do not integrate SMTP.
+
+Instead:
+
+- Log outgoing email
+- Store notification
+- Add TODO comments for future SMTP integration
+
+Inter-Service Communication
+
+Create OpenFeign endpoints that can be called from:
+
+- User Service
+- Course Service
+- AI Service
+
+Create DTOs suitable for Feign usage.
+
+Security
+
+Roles
+
+ADMIN
+INSTRUCTOR
+STUDENT
+
+Rules
+
+ADMIN:
+- Full access
+
+STUDENT:
+- View own notifications
+
+INSTRUCTOR:
+- View own notifications
+
+Swagger
+
+URLs:
+
+http://localhost:8084/swagger-ui/index.html
+
+http://localhost:8084/v3/api-docs
+
+Actuator
+
+Expose:
+
+- health
+- info
+- metrics
+
+Testing
+
+Generate:
+
+- NotificationServiceTest
+- NotificationControllerTest
+- NotificationPreferenceServiceTest
+
+JUnit 5
+Mockito
+Spring Boot Test
+
+Coverage Goal:
+
+80%+
+
+Quality
+
+- SOLID
+- Clean Architecture
+- SonarQube Ready
+- JaCoCo Ready
+
+Output Requirements
+
+Generate:
+
+- pom.xml
+- application.yml
+- entities
+- repositories
+- services
+- controllers
+- DTOs
+- tests
+- README.md
+
+After generation:
+
+1. Run self-review.
+2. Validate architecture.
+3. Run mvn clean test.
+4. Fix compilation issues.
+5. Start application.
+6. Verify Eureka registration.
+7. Verify Swagger.
+8. Generate final validation report.
+
+Do not stop for approval requests.
+
+Continue until Notification Service is fully generated and validated.
+```

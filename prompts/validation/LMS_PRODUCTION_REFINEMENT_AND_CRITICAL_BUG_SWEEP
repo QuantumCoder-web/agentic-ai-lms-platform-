@@ -1,0 +1,503 @@
+CRITICAL
+
+STOP adding isolated AI features.
+
+STOP adding demo widgets.
+
+STOP adding AI showcase screens.
+
+The platform currently feels like separate pages stitched together instead of a professional LMS SaaS.
+
+This phase is focused on product quality, logical flows, navigation, usability, seeded content validation, Tavily verification, payments, certificates, and bug elimination.
+
+==================================================
+P0 - TAVILY EXECUTION VERIFICATION
+==================================================
+
+Current issue:
+
+The AI Tutor claims:
+
+"Powered by Hybrid RAG (Course Context + Web Search)"
+
+However when asked:
+
+"What's the weather today?"
+
+The response was:
+
+"I don't have access to real-time weather..."
+
+This indicates Tavily is likely not executing.
+
+Required:
+
+Do not inspect configuration only.
+
+Provide runtime proof.
+
+For a question outside LMS content:
+
+"What is the weather today?"
+
+Show:
+
+Question
+↓
+Controller
+↓
+RAG Retrieval
+↓
+Context Check
+↓
+Tavily Request
+↓
+Tavily Response
+↓
+Prompt Assembly
+↓
+Gemini
+↓
+Final Response
+
+Return:
+
+✅ Tavily Request
+
+✅ Tavily Response
+
+✅ Source URLs
+
+✅ Gemini Input
+
+✅ Gemini Output
+
+Do not provide theoretical explanations.
+
+Provide actual runtime evidence.
+
+==================================================
+P0 - COURSE CATALOG BROKEN
+==================================================
+
+Current issue:
+
+Browse Courses / Explore Courses
+
+redirects to:
+
+/catalog
+
+Result:
+
+Blank white screen.
+
+This is unacceptable.
+
+Investigate:
+
+✅ Route registration
+
+✅ Component rendering
+
+✅ API calls
+
+✅ React runtime errors
+
+✅ Network requests
+
+✅ Error boundaries
+
+Fix:
+
+No route should ever result in a blank page.
+
+==================================================
+P0 - SEEDED COURSES AUDIT
+==================================================
+
+Audit all seeded courses.
+
+Especially:
+
+1. Spring Boot Microservices Architecture
+
+2. Generative AI, RAG & Agentic Systems
+
+3. Advanced Fullstack SaaS Development
+
+Verify:
+
+✅ Course Page Loads
+
+✅ Modules Load
+
+✅ Lessons Load
+
+✅ Videos Open
+
+✅ Resources Open
+
+✅ External Links Work
+
+✅ Lesson Navigation Works
+
+✅ Next Lesson Works
+
+✅ Previous Lesson Works
+
+✅ Continue Learning Works
+
+List every broken resource URL.
+
+List every broken lesson.
+
+Fix everything.
+
+==================================================
+P0 - COURSE COMPLETION FLOW
+==================================================
+
+Verify:
+
+Student
+↓
+Lesson Complete
+↓
+Module Progress
+↓
+Course Progress
+↓
+Course Complete
+
+Current reports suggest this is incomplete.
+
+Validate:
+
+✅ Mark Lesson Complete
+
+✅ Progress Saved
+
+✅ Resume Learning
+
+✅ Continue Learning
+
+✅ Completion Status
+
+✅ Database Persistence
+
+==================================================
+P0 - CERTIFICATE GENERATION
+==================================================
+
+Current status unclear.
+
+Verify runtime.
+
+Student
+↓
+Completes Course
+↓
+Course Marked Complete
+↓
+Certificate Generated
+↓
+Certificate Visible
+↓
+PDF Download
+
+Validate:
+
+✅ Student Name
+
+✅ Course Name
+
+✅ Completion Date
+
+✅ Certificate ID
+
+✅ Download Works
+
+If broken:
+
+Provide root cause.
+
+==================================================
+P0 - PREMIUM COURSE FLOW
+==================================================
+
+Current screenshots show premium course appears free.
+
+This is incorrect.
+
+Required:
+
+Spring Boot
+→ Free
+
+Generative AI
+→ Free
+
+Advanced Fullstack SaaS Development
+→ Premium
+
+Verify:
+
+✅ Premium Badge
+
+✅ Price Visible
+
+✅ Buy Now Visible
+
+✅ Course Detail Page Correct
+
+❌ No FREE label
+
+==================================================
+P0 - RAZORPAY COMPLETE FLOW
+==================================================
+
+Current status unclear.
+
+Verify:
+
+Course
+↓
+Buy Now
+↓
+Razorpay Checkout
+↓
+Payment Success
+↓
+Enrollment Created
+↓
+Notification Created
+↓
+Visible In My Courses
+
+Provide runtime validation.
+
+Provide screenshots.
+
+==================================================
+P1 - NAVIGATION REDESIGN
+==================================================
+
+Current UX issue:
+
+Large vertical sidebar dominates the screen.
+
+Feels like admin template UI.
+
+Required:
+
+Move toward a modern SaaS experience.
+
+Consider:
+
+✅ Compact Navigation
+
+✅ Floating Navigation
+
+✅ Top Navigation
+
+✅ Responsive Layout
+
+Prioritize content over navigation.
+
+The LMS should feel like:
+
+Udemy
+Coursera
+LinkedIn Learning
+Microsoft Learn
+
+Not:
+
+Admin Dashboard Template
+
+==================================================
+P1 - HOME PAGE HIERARCHY
+==================================================
+
+Current dashboard prioritizes AI widgets.
+
+This is wrong.
+
+Student flow should prioritize:
+
+Browse Courses
+↓
+Enroll
+↓
+Learn
+↓
+AI Assistance
+
+Not:
+
+AI
+↓
+Then Courses
+
+Required:
+
+Make learning journey primary.
+
+==================================================
+P1 - AI SLOP CLEANUP
+==================================================
+
+Current examples:
+
+"Stuck on a concept?"
+
+"Smart Recommendations"
+
+These feel generic and template-driven.
+
+Replace with actionable LMS experiences.
+
+Examples:
+
+✅ Continue Learning
+
+✅ Resume Last Lesson
+
+✅ Recommended Next Course
+
+✅ Roadmap Progress
+
+✅ Quiz Performance
+
+✅ Certificate Progress
+
+Avoid generic AI marketing text.
+
+==================================================
+P1 - CAREER ROADMAP AGENT
+==================================================
+
+Keep this feature.
+
+Enhance it.
+
+Student:
+
+"I want to become an AI Engineer"
+
+Agent:
+
+Goal Identified
+↓
+Analyze LMS Courses
+↓
+Build Roadmap
+↓
+Display Steps
+
+Each step:
+
+✅ Clickable
+
+✅ Course Linked
+
+✅ Enroll
+
+✅ Buy
+
+✅ Progress Tracking
+
+Roadmap should become part of learning experience.
+
+==================================================
+P1 - CHAT HISTORY
+==================================================
+
+Persist AI conversations.
+
+Requirements:
+
+✅ Database Storage
+
+✅ Last 10 Conversations
+
+✅ User Specific
+
+✅ Student
+
+✅ Instructor
+
+✅ Admin
+
+When user returns:
+
+Recent conversations available.
+
+==================================================
+P1 - LIGHT / DARK MODE
+==================================================
+
+Implement professionally.
+
+Requirements:
+
+✅ Light Mode
+
+✅ Dark Mode
+
+✅ Persist Preference
+
+✅ No Broken Contrast
+
+✅ No Unreadable Text
+
+==================================================
+P1 - COURSE LIBRARY ENHANCEMENT
+==================================================
+
+Expand catalog realism.
+
+Add:
+
+20-30 realistic seeded courses.
+
+Keep 3 flagship courses as featured.
+
+Categories:
+
+Backend
+Frontend
+AI
+ML
+Cloud
+DevOps
+Cybersecurity
+System Design
+Data Engineering
+
+No lorem ipsum.
+
+Use realistic modules and titles.
+
+==================================================
+P0 - LOGICAL BUG SWEEP
+==================================================
+
+Search entire platform for:
+
+❌ Blank pages
+
+❌ Dead links
+
+❌ Broken routes
+
+❌ Non-working buttons
+
+❌ Enrollment inconsistencies
+
+❌ Premium course inconsistencies
+
+❌ Certificate inconsistencies
+
+❌ Quiz inconsistencies

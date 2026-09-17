@@ -1,0 +1,286 @@
+CRITICAL BUSINESS LOGIC FIX
+
+IMPORTANT
+
+Do NOT redesign architecture.
+
+Do NOT create new role systems.
+
+Fix the existing approval workflow and role separation.
+
+==================================================
+SUPER ADMIN CORRECTION
+==================================================
+
+Current Super Admin Email:
+
+hanumanthubargav4@gmail.com
+
+Correct Email:
+
+hanumanthubhargav4@gmail.com
+
+Update all references to the Super Admin email.
+
+Verify:
+
+✅ Instructor application notifications sent to correct email
+
+✅ Approval notifications sent correctly
+
+==================================================
+CRITICAL BUG #1
+INSTRUCTOR CAN LOGIN BEFORE APPROVAL
+==================================================
+
+Current behavior:
+
+Instructor registers
+↓
+Approval status = PENDING
+↓
+Still able to login as Instructor
+
+This is WRONG.
+
+Required behavior:
+
+Instructor registers
+↓
+Approval status = PENDING
+↓
+Instructor account NOT activated
+↓
+Cannot access Instructor Dashboard
+↓
+Cannot create courses
+↓
+Cannot access instructor APIs
+
+Display a professional message:
+
+"Your instructor application is under review.
+You will receive an email once approved."
+
+Only after Admin Approval:
+
+PENDING
+↓
+APPROVED
+↓
+Account activated
+↓
+Instructor login enabled
+
+Verify this flow end-to-end.
+
+==================================================
+CRITICAL BUG #2
+INSTRUCTOR SEEING STUDENT DASHBOARD
+==================================================
+
+Current behavior:
+
+Instructor sees:
+
+- Browse Courses
+- Explore Courses
+- Student-style Dashboard
+
+This is WRONG.
+
+Instructor is not a student user.
+
+==================================================
+REQUIRED INSTRUCTOR EXPERIENCE
+==================================================
+
+Instructor Dashboard should be completely different.
+
+Remove student-focused sections:
+
+❌ Browse Courses
+
+❌ Explore Courses
+
+❌ Student Recommendations
+
+❌ Student Continue Learning
+
+Replace with:
+
+✅ Instructor Dashboard
+
+✅ My Courses
+
+✅ Create Course
+
+✅ Manage Courses
+
+✅ Modules
+
+✅ Lessons
+
+✅ Students
+
+✅ Analytics
+
+✅ AI Course Tools
+
+✅ Course Indexing
+
+==================================================
+INSTRUCTOR DASHBOARD
+==================================================
+
+Display:
+
+Welcome Back, {Full Name}
+
+Statistics:
+
+✅ Total Courses
+
+✅ Published Courses
+
+✅ Draft Courses
+
+✅ Total Students
+
+✅ Total Enrollments
+
+✅ Completion Rate
+
+✅ AI Usage
+
+Sections:
+
+✅ Recent Courses
+
+✅ Recent Enrollments
+
+✅ Course Performance
+
+✅ AI Course Tools
+
+==================================================
+ADMIN DASHBOARD IMPROVEMENTS
+==================================================
+
+Admin Dashboard should become platform-centric.
+
+Display:
+
+✅ Total Users
+
+✅ Students
+
+✅ Instructors
+
+✅ Pending Instructor Requests
+
+✅ Courses
+
+✅ Enrollments
+
+✅ AI Usage
+
+==================================================
+INSTRUCTOR APPROVAL CENTER
+==================================================
+
+Admin should see:
+
+Full Name
+
+Email
+
+LinkedIn URL
+
+Phone
+
+Bio
+
+Specialization
+
+Applied Date
+
+Actions:
+
+✅ Approve
+
+✅ Reject
+
+✅ View Details
+
+==================================================
+EMAIL WORKFLOW
+==================================================
+
+Verify:
+
+Instructor Applied
+↓
+Admin Email Sent
+
+Admin Approves
+↓
+Instructor Approval Email Sent
+
+Admin Rejects
+↓
+Instructor Rejection Email Sent
+
+Use Full Name in emails.
+
+==================================================
+SECURITY VALIDATION
+==================================================
+
+Verify:
+
+✅ Student cannot access instructor routes
+
+✅ Student cannot create courses
+
+✅ Pending Instructor cannot access instructor routes
+
+✅ Pending Instructor cannot create courses
+
+✅ Approved Instructor can access instructor routes
+
+✅ Admin only can approve instructors
+
+==================================================
+OUTPUT
+==================================================
+
+Return:
+
+✅ Fixed
+
+🟡 Partial
+
+❌ Missing
+
+For:
+
+- Instructor Registration
+- Pending Approval Enforcement
+- Instructor Login Restriction
+- Instructor Dashboard
+- Admin Dashboard
+- Approval Workflow
+- Email Workflow
+- Role Security
+
+For every fix provide:
+
+1. Root Cause
+2. Files Modified
+3. Fix Applied
+4. Runtime Validation
+
+Goal:
+
+A proper SaaS workflow where instructors must be approved before gaining instructor access, and instructor/admin interfaces are clearly separated from the student experience.

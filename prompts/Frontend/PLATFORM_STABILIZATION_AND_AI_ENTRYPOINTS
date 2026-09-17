@@ -1,0 +1,386 @@
+CRITICAL STABILIZATION PHASE
+
+Do NOT add new experimental features.
+
+Do NOT redesign major layouts.
+
+Do NOT perform architecture refactors.
+
+Do NOT introduce cascading changes.
+
+Goal:
+
+Make all existing LMS, AI, Notification, Approval, Profile and Chat entry points functional.
+
+Functionality first.
+
+Polish later.
+
+==================================================
+ISSUE #1
+AI LEARNING SUPPORT PAGE
+==================================================
+
+Current issue:
+
+"Ask about this lesson"
+
+appears on screen.
+
+However:
+
+❌ Not clickable
+
+❌ No navigation
+
+❌ No action
+
+This is unacceptable.
+
+Verify:
+
+- Button click handler
+- Route mapping
+- Navigation logic
+- Authentication behavior
+
+Required:
+
+Unauthenticated User:
+
+Click
+↓
+Redirect to Login
+
+After Login
+↓
+Redirect back to AI Assistant
+
+Authenticated User:
+
+Click
+↓
+Open AI Assistant
+
+==================================================
+ISSUE #2
+GLOBAL AI ASSISTANT
+==================================================
+
+Verify whether a usable AI chatbot exists.
+
+If missing:
+
+Implement a lightweight global assistant.
+
+Requirements:
+
+✅ Floating action button
+
+✅ Bottom-right corner
+
+✅ Available throughout application
+
+✅ Student access
+
+✅ Instructor access
+
+✅ Admin access
+
+==================================================
+CHAT EXPERIENCE
+==================================================
+
+Must support:
+
+✅ Open Chat
+
+✅ Close Chat
+
+✅ Minimize
+
+✅ New Chat
+
+✅ Clear Chat
+
+✅ Chat History
+
+✅ Session Persistence
+
+✅ Context Awareness
+
+Chat should not disappear when navigating pages.
+
+==================================================
+VOICE MODE
+==================================================
+
+Verify existing implementation first.
+
+If missing:
+
+Implement Voice Input Mode.
+
+Requirements:
+
+✅ Click microphone
+
+✅ Speak
+
+✅ Convert speech to text
+
+✅ Send to AI Assistant
+
+✅ Works for Student
+
+✅ Works for Instructor
+
+✅ Works for Admin
+
+Voice output optional.
+
+Voice input required.
+
+==================================================
+AI ROLE AWARENESS
+==================================================
+
+Student AI:
+
+✅ Course Questions
+
+✅ Lesson Help
+
+✅ Quiz Help
+
+✅ Summaries
+
+✅ Recommendations
+
+Instructor AI:
+
+✅ Course Creation Help
+
+✅ Lesson Suggestions
+
+✅ Quiz Creation
+
+✅ Student Engagement Insights
+
+Admin AI:
+
+✅ User Statistics
+
+✅ Instructor Approval Insights
+
+✅ Platform Metrics
+
+✅ Operational Questions
+
+AI must use role context.
+
+==================================================
+ISSUE #3
+COURSE CREATION VERIFICATION
+==================================================
+
+Verify instructor workflow.
+
+Can instructor:
+
+✅ Create Course
+
+✅ Add Image
+
+✅ Add Description
+
+✅ Add Modules
+
+✅ Add Lessons
+
+✅ Add YouTube Links
+
+✅ Add Resource Links
+
+✅ Publish Course
+
+✅ Edit Course
+
+✅ Delete Course
+
+Do not assume.
+
+Verify.
+
+==================================================
+ISSUE #4
+COURSE CONSUMPTION VERIFICATION
+==================================================
+
+Verify student workflow.
+
+Can student:
+
+✅ Browse Course
+
+✅ Open Course
+
+✅ Enroll
+
+✅ Access Lessons
+
+✅ Access AI Tutor
+
+✅ Generate Quiz
+
+✅ Generate Summary
+
+==================================================
+ISSUE #5
+RAG VALIDATION
+==================================================
+
+This is critical.
+
+Verify:
+
+Course
+↓
+Lesson
+↓
+Chunking
+↓
+Embedding
+↓
+pgvector
+↓
+Retrieval
+↓
+Gemini
+↓
+Answer
+
+Provide runtime proof.
+
+Test questions:
+
+"What is Eureka Service Discovery?"
+
+"What is RAG?"
+
+Answers must come from course content.
+
+==================================================
+ISSUE #6
+QUIZ VERIFICATION
+==================================================
+
+Verify:
+
+✅ Quiz generated from course content
+
+✅ Student can attempt
+
+✅ Results visible
+
+✅ Data stored
+
+==================================================
+ISSUE #7
+SUMMARY VERIFICATION
+==================================================
+
+Verify:
+
+✅ Lesson Summary
+
+✅ Module Summary
+
+✅ Course Summary
+
+Generated from real content.
+
+==================================================
+ISSUE #8
+NOTIFICATION VERIFICATION
+==================================================
+
+Verify actual usage.
+
+Admin:
+
+✅ New Instructor Application
+
+✅ Approval Notification
+
+Instructor:
+
+✅ Approval Notification
+
+✅ Course Events
+
+Student:
+
+✅ Enrollment Notification
+
+✅ Learning Notifications
+
+Bell icon must be functional.
+
+==================================================
+STRICT RULES
+==================================================
+
+Keep:
+
+✅ Seeded Spring Boot Course
+
+✅ Seeded Generative AI Course
+
+✅ Existing AI Courses
+
+✅ Existing Educational Content
+
+Remove only fake operational data.
+
+Do NOT break:
+
+✅ Authentication
+
+✅ Instructor Approvals
+
+✅ Profiles
+
+✅ Notifications
+
+✅ AI
+
+✅ RAG
+
+✅ Existing APIs
+
+==================================================
+OUTPUT
+==================================================
+
+For every item report:
+
+✅ Working
+
+🟡 Partial
+
+❌ Missing
+
+Provide:
+
+1. Runtime Evidence
+
+2. API Used
+
+3. Database Dependency
+
+4. Remaining Blockers
+
+Do NOT report implementation assumptions.
+
+Report only verified functionality.
